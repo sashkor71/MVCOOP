@@ -7,10 +7,19 @@ class NewsController //контроллер новостей
     //вывод всех новостей
     public function actionAll()
     {
+        var_dump(NewsModel::findAll());
+        die;
         //пытаемся получить запись из базы данных с помощью модели
-        $items = News::getAll();
+        $news = News::getAll();
+        //создаём объект View
+        $view = new View();
+        //1 вариант: передаём данные($news) из базы в метод assign объекта $view
+        //$view->assign('items', $news);
+        //2 вариант: передаём данные($news) из базы в произвольное свойство items
+        $view->items = $news;
+        //передаём шаблон view(all.php) объекту в метод display
+        $view->display('news/all.php');
         //отображаем эту модель с помощью view
-        include __DIR__ . '/../views/news/all.php';
     }
 
     //вывод одной новости(id) по запросу пользователя
@@ -19,8 +28,12 @@ class NewsController //контроллер новостей
         //какую новость(id) хочет пользователь
         $id = $_GET['id'];
         //пытаемся получить запись из базы данных с помощью модели
-        $item = News::getOne($id);
-        //отображаем эту модель с помощью view
-        include __DIR__ . '/../views/news/one.php';
+        $items = News::getOne($id);
+        //создаём объект View
+        $view = new View();
+        //передаём данные($items) из базы в метод assign объекта $view
+        $view->assign('items', $items);
+        //передаём шаблон view(one.php) объекту в метод display
+        $view->render('news/one.php');
     }
 }

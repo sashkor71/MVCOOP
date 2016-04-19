@@ -1,4 +1,6 @@
 <?php //фронтконтроллер
+//показывать все ошибки php(можно указать в php.ini)
+error_reporting(E_ALL);
 require_once __DIR__. '/autoload.php';
 //конструируем название контроллера, запрашиваемого пользователем, либо News по-умолчанию
 $ctrl = isset($_GET['ctrl']) ? $_GET['ctrl'] : 'News';
