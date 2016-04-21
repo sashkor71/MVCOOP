@@ -11,9 +11,16 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'All';
 $controllerClassName = $ctrl . 'Controller';
 //пытаемся подключить файл созданногоконтроллера
 //require_once __DIR__ . '/controllers/' . $controllerClassName . '.php'; //перенесено в автозагрузку(autoload.php)
-//создаём контроллер
-$controller = new $controllerClassName;
-//конструируем action(метод) контроллера
-$method = 'action' . $act;
-//вызываем action(метод) контроллера
-$controller->$method();
+try{
+    //создаём контроллер
+    $controller = new $controllerClassName;
+    //конструируем action(метод) контроллера
+    $method = 'action' . $act;
+    //вызываем action(метод) контроллера
+    $controller->$method();
+    //перехватываем пузырь исключения
+}catch (ModelException $e){
+    $view = new View();
+    $view->error = $e->getMessage();
+    $view->display('error.php');
+}

@@ -58,10 +58,11 @@ abstract class AbstractModel
         $db->setClassName(get_called_class());
         $sql = 'SELECT * FROM ' . static::$table . ' WHERE '. $column . '=:value';//"SELECT * FROM news WHERE title=:value"
         $res = $db->query($sql, [':value' => $value]);
-        if (!empty($res)){
-            return $res[0];
+        if (empty($res)){
+            //отпускаем пузырь исключения(запускаем код назад: ищем блок try{} catch{})
+            throw new ModelException('Ничего не найдено...');
         }
-        return false;
+        return $res[0];
     }
 
     public function insert()

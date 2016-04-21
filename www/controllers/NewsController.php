@@ -7,13 +7,8 @@ class NewsController //контроллер новостей
     //вывод всех новостей
     public function actionAll()
     {
-
-        $art = NewsModel::findOneByColumn('title', 'Третьино');
-        $art->title = 'Вторая статья';
-        $art->save();
-        die;
         //пытаемся получить запись из базы данных с помощью модели
-        $news = News::getAll();
+        $news = NewsModel::findAll();
         //создаём объект View
         $view = new View();
         //1 вариант: передаём данные($news) из базы в метод assign объекта $view
@@ -31,7 +26,7 @@ class NewsController //контроллер новостей
         //какую новость(id) хочет пользователь
         $id = $_GET['id'];
         //пытаемся получить запись из базы данных с помощью модели
-        $items = News::getOne($id);
+        $items = NewsModel::getOne($id);
         //создаём объект View
         $view = new View();
         //передаём данные($items) из базы в метод assign объекта $view
