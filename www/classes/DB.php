@@ -29,6 +29,19 @@ class DB
         return $sth->fetchAll(PDO::FETCH_CLASS, $this->className);
     }
 
+    public function execute($sql, $param=[])
+    {
+        //подготовка запроса
+        $sth = $this->dbh->prepare($sql);
+        //выполнить запрос с указанными параметрами
+        return $sth->execute($param);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->dbh->lastInsertId();
+    }
+
     /*
     public function queryAll($sql, $class = 'stdClass')
     {

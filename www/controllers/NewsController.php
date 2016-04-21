@@ -7,7 +7,10 @@ class NewsController //контроллер новостей
     //вывод всех новостей
     public function actionAll()
     {
-        var_dump(NewsModel::findAll());
+
+        $art = NewsModel::findOneByColumn('title', 'Третьино');
+        $art->title = 'Вторая статья';
+        $art->save();
         die;
         //пытаемся получить запись из базы данных с помощью модели
         $news = News::getAll();
